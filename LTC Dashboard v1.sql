@@ -13,9 +13,15 @@ PRINT @Period_End
 
 
 
--- CCG to Region
-
---IF OBJECT_ID ('[MHDInternal].[TTAD_Dashboard_LTC_Monthly]') IS NOT NULL DROP TABLE [MHDInternal].[TTAD_Dashboard_LTC_Monthly]
+-- Monthly Breakdown 
+	-- LongTerm Conditions
+	-- Integrated Pathways
+	-- Geographies
+	-- Referrals/Access/Completion
+		-- Refferal Type
+	-- Outcome Measures
+	-- Waits
+	-- Apoointment Types
 
 INSERT INTO [MHDInternal].[TTAD_Dashboard_LTC_Monthly]
 SELECT DATENAME(m, l.[ReportingPeriodStartDate]) + ' ' + CAST(DATEPART(yyyy, l.[ReportingPeriodStartDate]) AS varchar) AS Month ,
@@ -106,9 +112,6 @@ CASE WHEN [IAPTLTCServiceInd] = 'Y' THEN 'Integrated' ELSE 'Non-Integrated' END 
 			,COUNT( DISTINCT CASE WHEN CareContDate BETWEEN l.[ReportingPeriodStartDate] AND l.[ReportingPeriodEndDate] AND AttendOrDNACode = '3' THEN CareContactId ELSE NULL END) AS 'Did not attend, no advance warning given'
 			,COUNT( DISTINCT CASE WHEN CareContDate BETWEEN l.[ReportingPeriodStartDate] AND l.[ReportingPeriodEndDate] AND AttendOrDNACode = '4' THEN CareContactId ELSE NULL END) AS 'Appointment cancelled or postponed by the health care provider'
 
---INTO   [MHDInternal].[TTAD_Dashboard_LTC_Monthly]
-
-
 FROM	[mesh_IAPT].[IDS101Referral] r
 		---------------------------	
 		INNER JOIN [mesh_IAPT].[IDS001mpi] mpi ON r.recordnumber = mpi.recordnumber
@@ -139,7 +142,7 @@ GROUP BY DATENAME(m, l.[ReportingPeriodStartDate]) + ' ' + CAST(DATEPART(yyyy, l
 			,CASE WHEN ch.[STP_Name] IS NOT NULL THEN ch.[STP_Name] ELSE 'Other' END
 
 
- --IF OBJECT_ID ('[MHDInternal].[TTAD_Dashboard_LTC_Monthly_Averages]') IS NOT NULL DROP TABLE [MHDInternal].[TTAD_Dashboard_LTC_Monthly_Averages]
+ --Monthly Averages
 
 INSERT INTO [MHDInternal].[TTAD_Dashboard_LTC_Monthly_Averages]
 SELECT *
