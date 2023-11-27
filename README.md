@@ -1,0 +1,1 @@
+This repository has been archived and the scripts for the Long Term Conditions (LTC) Dashboard can be found here: https://github.com/nhsengland/Talking-Therapies/tree/main/Long%20Term%20Conditions%20(LTC)%20Dashboard
